@@ -1,0 +1,104 @@
+for i,v in game.Players.LocalPlayer.Backpack:GetChildren() do 
+        if v.Name == "I aint fightin allat" or  v.Name == "Run Tool"  then 
+            v:Destroy() 
+        end 
+    end
+    
+    
+    local tool = Instance.new("Tool")
+    tool.Name = "I aint fightin allat"
+
+    tool.Parent = game.Players.LocalPlayer.Backpack
+    tool.RequiresHandle = false
+    local Velocity
+    local moving = false
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    local humanoid = character:WaitForChild("Humanoid")
+    local runService = game:GetService("RunService")
+    
+
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://18897115785" 
+    local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
+    local animationTrack
+    
+
+    local function moveForward()
+		task.spawn(function()
+			 local num = Instance.new("NumberValue")
+            num.Value = _G.boostSpeed
+        
+         game.TweenService:Create(num,TweenInfo.new(.9),{Value = _G.movementSpeed}):Play()
+
+        Velocity = Instance.new("BodyVelocity",humanoidRootPart)
+        Velocity.MaxForce = Vector3.new(120000,0,120000)
+        Velocity.P = 120000
+        while moving do
+            
+            local forwardDirection = humanoidRootPart.CFrame.LookVector
+            Velocity.Velocity = forwardDirection * num.Value
+            runService.Stepped:Wait()
+        end
+		end)
+
+    
+    end
+
+    local db = false
+     local db2 = false
+	 local db3 = false
+    tool.Equipped:Connect(function()
+    if db == true or db2 == true then return end
+        db2 = true
+
+        
+        animation.AnimationId = "rbxassetid://17354976067"
+         
+        animationTrack11 = animator:LoadAnimation(animation)
+        animationTrack11.Priority = Enum.AnimationPriority.Action4
+        
+        animationTrack11:Play()
+
+		animationTrack11.Stopped:Connect(function()
+			moving = false
+			db = false
+			db2 = false
+			db3 = true
+		end)
+
+		Wait(1.9)
+		if db3 == false then 
+			 moving = true
+        	moveForward()
+		end
+       
+
+		Wait(2.7)
+		if db3 == true then db3 = false return end
+		
+
+		moving = false
+            db = true
+            
+
+            local num = Instance.new("NumberValue")
+            num.Value = _G.movementSpeed
+            local connection = game["Run Service"].RenderStepped:Connect(function()
+            
+             Velocity.Velocity = humanoidRootPart.CFrame.LookVector * num.Value
+            end)
+            game.TweenService:Create(num,TweenInfo.new(3),{Value = 0}):Play()
+
+            animationTrack11.Stopped:Wait()
+            
+            Velocity:Destroy()
+
+            connection:Disconnect()
+            
+            db = false
+			db2 = false
+       
+    end)
