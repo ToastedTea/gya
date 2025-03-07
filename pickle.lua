@@ -335,7 +335,7 @@ local PingMult = _G.PingMult
 	local function updateTargetBlock()
 		if targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart") and ended == false then
 			local targetRootPart = targetCharacter.HumanoidRootPart
-			local pingInSeconds = (PingMS * PingMult) / 2000
+			local pingInSeconds = (PingMS * PingMult) / 1000
 			local velocity = targetRootPart.Velocity
 			local direction = targetRootPart.CFrame.LookVector
 			local up = targetRootPart.CFrame.UpVector
