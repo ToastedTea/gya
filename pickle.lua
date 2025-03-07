@@ -178,7 +178,7 @@ local PingMult = _G.PingMult
 				local bodyVelocity = assignableTargetBlock:FindFirstChildOfClass("BodyVelocity")
 
 				-- Check if `assignableTargetBlock` has intercepted `targetBlock`
-				if ((assignableTargetBlock.Position - targetPosition).Magnitude <= interceptionThreshold and hasIntercept == false) or hasIntercept == true then
+				if ((assignableTargetBlock.Position - targetPosition).Magnitude <= interceptionThreshold and hasIntercept == true) or hasIntercept == true then
 					
 					hasIntercept = true
 					task.delay(2,function()
