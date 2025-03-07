@@ -339,12 +339,12 @@ local PingMult = _G.PingMult
 			local velocity = targetRootPart.Velocity
 			local direction = targetRootPart.CFrame.LookVector
 			local up = targetRootPart.CFrame.UpVector
-			local predictedPosition = targetRootPart.Position + targetRootPart.AssemblyLinearVelocity * pingInSeconds
-			local horizontalSensitivity = 0
-			local verticalSensitivity = 0
+			local predictedPosition = targetRootPart.Position + (velocity * pingInSeconds)
+			local horizontalSensitivity = 1
+			local verticalSensitivity = 1
 			local horizontalOffset = direction * (velocity.X * pingInSeconds * horizontalSensitivity)
 			local verticalOffset = up * (velocity.Y * pingInSeconds * verticalSensitivity)
-			predictedPosition = predictedPosition --+ horizontalOffset + verticalOffset
+			predictedPosition = predictedPosition + horizontalOffset + verticalOffset
 			targetBlock.Position = predictedPosition
 		end
 	end
