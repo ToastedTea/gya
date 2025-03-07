@@ -1,12 +1,14 @@
 -- Variables
-local baseMinSpeed = 200          -- Base minimum speed when `targetCharacter` is stationary
-local maxSpeed = 1000            -- Maximum speed when far from `targetBlock`
-local distanceFactor = 1         -- Factor to scale speed increase with distance
-local velocityFactor = 1         -- Factor to adjust minimum speed based on `targetCharacter`'s speed
-local interceptionThreshold = 30  -- Distance threshold for successful interception
-local curveIntensity = .5       -- Intensity factor to control the curvature of the path
-local PingMS = 100
-local PingMult = 1.5
+local baseMinSpeed = _G.baseMinSpeed          -- Base minimum speed when `targetCharacter` is stationary
+local maxSpeed = _G.maxSpeed            -- Maximum speed when far from `targetBlock`
+local distanceFactor = _G.distanceFactor         -- Factor to scale speed increase with distance
+local velocityFactor = _G.velocityFactor         -- Factor to adjust minimum speed based on `targetCharacter`'s speed
+local interceptionThreshold = _G.interceptionThreshold  -- Distance threshold for successful interception
+local curveIntensity = _G.curveIntensity       -- Intensity factor to control the curvature of the path
+local PingMS = _G.PingMS
+local PingMult = _G.PingMult
+
+_G.Loaded = true
 
 
 
@@ -181,17 +183,20 @@ if assignableTargetBlock and targetCharacter and ended == false and targetCharac
 		local bodyVelocity = assignableTargetBlock:FindFirstChildOfClass("BodyVelocity")
 
 		-- Check if `assignableTargetBlock` has intercepted `targetBlock`
-		if (assignableTargetBlock.Position - targetPosition).Magnitude <= interceptionThreshold or hasIntercept == true then
-            interceptionThreshold = 10000
-            hasIntercept = true
-			targetPosition = targetBlock.Position  -- After intercepting, follow `targetBlock` directly
+		if (assignableTargetBlock.Position - targetPosition).Magnitude <= interceptionThreshold and hasIntercept == false then
+           		hasIntercept = true
+			if bodyVelocity then
+				bodyVelocity.Velocity = bodyVelocity.Velocity
+			end
 
-			assignableTargetBlock.CFrame = targetBlock.CFrame
-			local targetRootPart = targetCharacter.HumanoidRootPart
+			-- Make assignableTargetBlock face the direction it's moving
+			if bodyVelocity.Velocity.Magnitude > 0 then
+				assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
+			end
+			task.delay(1,function()
+				hasIntercept = false
 
-			-- Predict where the target will be after the ping delay
-			local predictedPosition3 = targetRootPart.Position + (targetRootPart.LookVector  * 30)
-			bodyVelocity.Velocity = Vector3.zero
+			end)
 
             
 
@@ -335,7 +340,7 @@ end)
 local function updateTargetBlock()
     if targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart") and ended == false then
         local targetRootPart = targetCharacter.HumanoidRootPart
-        local pingInSeconds = (PingMS * PingMult) / 1000
+        local pingInSeconds = (PingMS * PingMult) / 2000
         local velocity = targetRootPart.Velocity
         local direction = targetRootPart.CFrame.LookVector
         local up = targetRootPart.CFrame.UpVector
