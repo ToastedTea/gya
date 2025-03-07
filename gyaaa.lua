@@ -391,7 +391,7 @@ local function GOON()
 	local function checkProximity()
 		if assignableTargetBlock and targetBlock and ended == false then
 			local distance = (assignableTargetBlock.Position - targetBlock.Position).Magnitude
-			if distance <= 5 then  -- You can adjust this threshold as needed
+			if distance <= _G.Kablooey then  -- You can adjust this threshold as needed
 
 				for i, v in aircraft:GetDescendants() do
 					if v.Name == "ExplosiveBlock" then
