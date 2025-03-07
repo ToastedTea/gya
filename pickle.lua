@@ -1,13 +1,16 @@
 local function GOON()
-_G.Loaded = true
-local baseMinSpeed = _G.baseMinSpeed        -- Base minimum speed when `targetCharacter` is stationary
-local maxSpeed = _G. maxSpeed           -- Maximum speed when far from `targetBlock`
-local distanceFactor = _G.distanceFactor         -- Factor to scale speed increase with distance
-local velocityFactor = _G.velocityFactor         -- Factor to adjust minimum speed based on `targetCharacter`'s speed
-local interceptionThreshold = _G.interceptionThreshold  -- Distance threshold for successful interception
-local curveIntensity = _G.  curveIntensity     -- Intensity factor to control the curvature of the path
-local PingMS = _G.PingMS
-local PingMult = _G.PingMult
+
+	local SPPPPP = 1
+	local bouttabus = 10
+	_G.Loaded = true
+	local baseMinSpeed = _G.baseMinSpeed        -- Base minimum speed when `targetCharacter` is stationary
+	local maxSpeed = _G. maxSpeed           -- Maximum speed when far from `targetBlock`
+	local distanceFactor = _G.distanceFactor         -- Factor to scale speed increase with distance
+	local velocityFactor = _G.velocityFactor         -- Factor to adjust minimum speed based on `targetCharacter`'s speed
+	local interceptionThreshold = _G.interceptionThreshold  -- Distance threshold for successful interception
+	local curveIntensity = _G.  curveIntensity     -- Intensity factor to control the curvature of the path
+	local PingMS = _G.PingMS
+	local PingMult = _G.PingMult
 	for i,v in game:GetService("Workspace"):GetChildren() do
 		if v.Name == "TargetBlock"  then
 			v:Destroy()
@@ -170,34 +173,18 @@ local PingMult = _G.PingMult
 				-- Combine direction with perpendicular direction to get a smooth curve
 				local curvedDirection = (directionToTarget + perpendicularDirection).unit
 				local distanceToTarget = (targetPosition - assignableTargetBlock.Position).Magnitude
+				bouttabus = distanceToTarget
 				local targetCharacterSpeed = targetCharacter.HumanoidRootPart.Velocity.Magnitude
 				local minSpeed = baseMinSpeed + (targetCharacterSpeed * velocityFactor)
-				local customSpeed = math.clamp(minSpeed + (distanceToTarget * distanceFactor), minSpeed, maxSpeed)
+				local customSpeed = maxSpeed
+
+				SPPPPP = customSpeed
 
 				-- Move assignableTargetBlock towards the target position with the curved path
 				local bodyVelocity = assignableTargetBlock:FindFirstChildOfClass("BodyVelocity")
 
 				-- Check if `assignableTargetBlock` has intercepted `targetBlock`
-				if ((assignableTargetBlock.Position - targetPosition).Magnitude <= interceptionThreshold and hasIntercept == true) or hasIntercept == true then
-					
-					hasIntercept = true
-					task.delay(2,function()
-						hasIntercept = false
-					end)
-
-					if bodyVelocity then
-						bodyVelocity.Velocity = bodyVelocity.Velocity
-					end
-
-					-- Make assignableTargetBlock face the direction it's moving
-					if bodyVelocity.Velocity.Magnitude > 0 then
-						assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
-					end
-
-
-				else
-
-					if bodyVelocity then
+				if bodyVelocity then
 						bodyVelocity.Velocity = curvedDirection * customSpeed
 					end
 
@@ -205,7 +192,6 @@ local PingMult = _G.PingMult
 					if bodyVelocity.Velocity.Magnitude > 0 then
 						assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
 					end
-				end
 
 			end
 		end)
@@ -328,6 +314,7 @@ local PingMult = _G.PingMult
 	game:GetService("RunService").Heartbeat:Connect(function()
 		handleAssignableTargetBlock()  -- Handle the assignable target block if it exists
 	end)
+
 	-- Function to update the target block's position with prediction based on ping
 
 
@@ -335,19 +322,15 @@ local PingMult = _G.PingMult
 	local function updateTargetBlock()
 		if targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart") and ended == false then
 			local targetRootPart = targetCharacter.HumanoidRootPart
-			local pingInSeconds = (PingMS * PingMult) / 1000
-			local velocity = targetRootPart.Velocity
-			local direction = targetRootPart.CFrame.LookVector
-			local up = targetRootPart.CFrame.UpVector
-			local predictedPosition = targetRootPart.Position + (velocity * pingInSeconds)
-			local horizontalSensitivity = 1
-			local verticalSensitivity = 1
-			local horizontalOffset = direction * (velocity.X * pingInSeconds * horizontalSensitivity)
-			local verticalOffset = up * (velocity.Y * pingInSeconds * verticalSensitivity)
-			predictedPosition = predictedPosition + horizontalOffset + verticalOffset
+			local latencyFactor = PingMS / 1000
+			local timeToImpact = bouttabus / SPPPPP
+            local predictedPosition = targetRootPart.Position + (targetRootPart.Velocity * (timeToImpact + latencyFactor))
+
+			-- Predict future target position
 			targetBlock.Position = predictedPosition
 		end
 	end
+
 
 
 
