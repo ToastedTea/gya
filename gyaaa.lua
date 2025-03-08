@@ -478,9 +478,9 @@ local function GOON()
 	setupHighlights()
 	game:GetService("RunService").RenderStepped:Connect(updateTargetBlock)
 
-	local ee,label31 = createBillboardGui(targetBlock,Color3.fromRGB(0, 0, 255))
+	--local ee,label31 = createBillboardGui(targetBlock,Color3.fromRGB(0, 0, 255))
 	local ee1,label32 = createBillboardGui(targetBlock2,Color3.fromRGB(255, 255, 0))
-	local ee2,label3 = createBillboardGui(targetBlock21,Color3.fromRGB(255, 0, 0))
+	--local ee2,label3 = createBillboardGui(targetBlock21,Color3.fromRGB(255, 0, 0))
 
 --[[ Add a blue highlight to the target block for visibility
 local targetBlockHighlight = Instance.new("Highlight")
