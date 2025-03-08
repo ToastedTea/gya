@@ -11,6 +11,7 @@ local function GOON()
 	local c6 = nil
 	local c7 = nil
 	local c8 = nil
+	local c9 = nil
 
 	local SPPPPP = 1
 	local bouttabus = 10
@@ -446,8 +447,9 @@ local function GOON()
 	textLabel.TextScaled = true
 
 	task.spawn(function()
-		while targetgobye == false do
-			local pingRf = game:GetService("ReplicatedStorage").NexusAdmin_GetPersistentBanList
+		c9 = game:GetService("RunService").Heartbeat:Connect(function()
+			if targetgobye == false then
+					local pingRf = game:GetService("ReplicatedStorage").NexusAdmin_GetPersistentBanList
 			local start = time()
 			pingRf:InvokeServer()
 			local yooo = (time() - start)
@@ -464,7 +466,9 @@ local function GOON()
 
 			task.wait(2)
 			textLabel.Text = "UPDATING"
-		end
+			end
+
+		end)
 	end)
 
 	local function onTargetBlockDestroyed()
@@ -514,6 +518,7 @@ local function GOON()
 	table.insert(CONNECTIONS,c6)
 	table.insert(CONNECTIONS,c7)
 	table.insert(CONNECTIONS,c8)
+	table.insert(CONNECTIONS,c9)
 	
 	
 	
