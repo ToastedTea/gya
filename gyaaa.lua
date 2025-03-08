@@ -2,14 +2,14 @@ local function GOON()
 
 	local CONNECTIONS = {}
 	
-	local c1
-	local c2
-	local c3
-	local c4
-	local c5
-	local c6
-	local c7
-	local c8
+	local c1 = nil
+	local c2 = nil
+	local c3 = nil
+	local c4 = nil
+	local c5 = nil
+	local c6 = nil
+	local c7 = nil
+	local c8 = nil
 
 	local SPPPPP = 1
 	local bouttabus = 10
@@ -495,10 +495,10 @@ local function GOON()
 		end
 	end)
 
-	 c6 = game:GetService("RunService").Heartbeat:Connect(checkProximity)
+	c6 = game:GetService("RunService").Heartbeat:Connect(checkProximity)
 	-- Initial setup of highlights and main loop
 
-	 c7 = workspace.ChildAdded:Connect(function(ch)
+	c7 = workspace.ChildAdded:Connect(function(ch)
 		setupHighlights()
 	end)
 	setupHighlights()
