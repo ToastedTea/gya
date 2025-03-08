@@ -1,5 +1,15 @@
 local function GOON()
 
+	local CONNECTIONS = {}
+	
+	local c1
+	local c2
+	local c3
+	local c4
+	local c5
+	local c6
+	local c7
+	local c8
 
 	local SPPPPP = 1
 	local bouttabus = 10
@@ -118,7 +128,7 @@ local function GOON()
 			highlight.Adornee = target
 			highlight.FillColor = _G.ESPCOLOR
 			highlight.OutlineColor = _G.ESPOUTLINECOLOR
-			
+
 			highlight.OutlineTransparency = _G.ESPOUTLINETRANS
 			highlight.FillTransparency = _G.ESPTRANS
 			highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
@@ -188,13 +198,13 @@ local function GOON()
 
 				-- Check if `assignableTargetBlock` has intercepted `targetBlock`
 				if bodyVelocity then
-						bodyVelocity.Velocity = curvedDirection * customSpeed
-					end
+					bodyVelocity.Velocity = curvedDirection * customSpeed
+				end
 
-			-- Make assignableTargetBlock face the direction it's moving
-					if bodyVelocity.Velocity.Magnitude > 0 then
+				-- Make assignableTargetBlock face the direction it's moving
+				if bodyVelocity.Velocity.Magnitude > 0 then
 					assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
-					end
+				end
 
 			end
 		end)
@@ -207,12 +217,12 @@ local function GOON()
 		if ended == false then
 
 			for _, highlight in highlightFolder:GetChildren() do
-				highlight.FillColor = Color3.fromRGB(255, 0, 0) -- Default red for non-targets
+				highlight.FillColor = _G.ESPCOLOR -- Default red for non-targets
 			end
 			if targetCharacter then
 				local targetHighlight = highlightFolder:FindFirstChild(targetCharacter.Name .. "_Highlight")
 				if targetHighlight then
-					targetHighlight.FillColor = Color3.fromRGB(0, 255, 0) -- Green for the current target
+					targetHighlight.FillColor = _G.ESPTARGETCOLOR -- Green for the current target
 				end
 			end
 		end
@@ -241,13 +251,15 @@ local function GOON()
 	local function setupHighlights()
 		for _, otherPlayer in players:GetPlayers() do
 			if otherPlayer ~= player and otherPlayer.Character then
-				local AHGAHAHAH = workspace:FindFirstChild("PIayerAircraft"):FindFirstChild(otherPlayer.Name) or game:GetService("Workspace"):FindFirstChild(otherPlayer.Name .. " Aircraft")
-				createHighlight(AHGAHAHAH, Color3.fromRGB(255, 0, 0),otherPlayer.Name) -- Default red
-			end
-		end
-		for _, npc in npcFolder:GetChildren() do
-			if npc:FindFirstChild("HumanoidRootPart") then
-				createHighlight(npc, Color3.fromRGB(255, 0, 0)) -- Default red
+
+				local AHGAHAHAH = game:GetService("Workspace"):FindFirstChild(otherPlayer.Name .. " Aircraft")
+				if AHGAHAHAH ~= nil then
+					if not highlightFolder:FindFirstChild(otherPlayer.Name.."_Highlight") then 
+						createHighlight(AHGAHAHAH, Color3.fromRGB(255, 0, 0),otherPlayer.Name) -- Default red
+					end
+
+				end
+
 			end
 		end
 	end
@@ -308,13 +320,15 @@ local function GOON()
 
 
 
-		game:GetService("RunService").RenderStepped:Connect(updateDistance1)
+		c1 =game:GetService("RunService").RenderStepped:Connect(updateDistance1)
 		return billboardGui,distanceLabel
 	end
 
 	-- Periodically check if players or NPCs need highlights
-	game:GetService("RunService").Heartbeat:Connect(setupHighlights)
-	game:GetService("RunService").Heartbeat:Connect(function()
+
+
+	c2 = game:GetService("RunService").Heartbeat:Connect(setupHighlights)
+	c3 = game:GetService("RunService").Heartbeat:Connect(function()
 		handleAssignableTargetBlock()  -- Handle the assignable target block if it exists
 	end)
 
@@ -328,7 +342,7 @@ local function GOON()
 			local latencyFactor = PingMS / 1000
 			local dist = (targetRootPart.Position - assignableTargetBlock.Position).Magnitude
 			local timeToImpact = dist / SPPPPP
-            local predictedPosition = targetRootPart.Position + (targetRootPart.Velocity * (timeToImpact + latencyFactor))
+			local predictedPosition = targetRootPart.Position + (targetRootPart.Velocity * (timeToImpact + latencyFactor))
 
 			-- Predict future target position
 			targetBlock.Position = predictedPosition
@@ -382,7 +396,7 @@ local function GOON()
 
 	-- Click event for targeting within a radius in screen space
 	local userInputService = game:GetService("UserInputService")
-	userInputService.InputBegan:Connect(function(input)
+	c4 = userInputService.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			local mouse = player:GetMouse()
 			local mousePosition = Vector2.new(mouse.X, mouse.Y)
@@ -398,8 +412,8 @@ local function GOON()
 				for i, v in aircraft:GetDescendants() do
 					if v.Name == "ExplosiveBlock" then
 						local args = {
-						[1] = 1741392252.9400637;
-						[2] = "F";
+							[1] = 1741392252.9400637;
+							[2] = "F";
 						}
 
 
@@ -456,6 +470,12 @@ local function GOON()
 		targetgobye = true
 		ended = true
 		textLabel.Text = "NOIOOOOOO"
+		
+		task.spawn(function()
+			for i,v in CONNECTIONS do
+				v:Disconnect()
+			end
+		end)
 		assignableTargetBlock:Destroy()
 		targetBlock:Destroy()
 		targetBlock21:Destroy()
@@ -469,17 +489,34 @@ local function GOON()
 	-- Connect the event to detect if targetBlock gets destroyed
 
 	-- Periodically check proximity
-	game:GetService("RunService").Heartbeat:Connect(function()
+	c5 = game:GetService("RunService").Heartbeat:Connect(function()
 		if game:GetService("Workspace"):FindFirstChild(game.Players.LocalPlayer.Name .. " Aircraft") == nil and targetgobye == false then 
 			onTargetBlockDestroyed()
 		end
 	end)
 
-	game:GetService("RunService").Heartbeat:Connect(checkProximity)
+	 c6 = game:GetService("RunService").Heartbeat:Connect(checkProximity)
 	-- Initial setup of highlights and main loop
-	setupHighlights()
-	game:GetService("RunService").RenderStepped:Connect(updateTargetBlock)
 
+	 c7 = workspace.ChildAdded:Connect(function(ch)
+		setupHighlights()
+	end)
+	setupHighlights()
+	c8 = game:GetService("RunService").RenderStepped:Connect(updateTargetBlock)
+	
+	
+	table.insert(CONNECTIONS,c1)
+	table.insert(CONNECTIONS,c2)
+	table.insert(CONNECTIONS,c3)
+	table.insert(CONNECTIONS,c4)
+	table.insert(CONNECTIONS,c5)
+	table.insert(CONNECTIONS,c6)
+	table.insert(CONNECTIONS,c7)
+	table.insert(CONNECTIONS,c8)
+	
+	
+	
+	
 	--local ee,label31 = createBillboardGui(targetBlock,Color3.fromRGB(0, 0, 255))
 	local ee1,label32 = createBillboardGui(targetBlock2,Color3.fromRGB(255, 255, 0))
 	--local ee2,label3 = createBillboardGui(targetBlock21,Color3.fromRGB(255, 0, 0))
