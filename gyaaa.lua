@@ -259,7 +259,7 @@ local function GOON()
 
 		local billboardGui = Instance.new("BillboardGui")
 		billboardGui.Adornee = targetPart
-		billboardGui.Size = UDim2.new(0, 10, 0, 10) -- Adjust size of the outline
+		billboardGui.Size = UDim2.new(0, 20, 0, 20) -- Adjust size of the outline
 		billboardGui.StudsOffset = Vector3.new(0, 0, 0) -- Adjust height above the target
 		billboardGui.AlwaysOnTop = true
 		billboardGui.Parent = targetBlock
