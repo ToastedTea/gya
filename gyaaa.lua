@@ -185,28 +185,14 @@ local function GOON()
 				local bodyVelocity = assignableTargetBlock:FindFirstChildOfClass("BodyVelocity")
 
 				-- Check if `assignableTargetBlock` has intercepted `targetBlock`
-				if (assignableTargetBlock.Position - targetPosition).Magnitude <= interceptionThreshold or hasIntercept == true then
-            interceptionThreshold = 10000
-            hasIntercept = true
-			targetPosition = targetBlock.Position  -- After intercepting, follow `targetBlock` directly
-
-			assignableTargetBlock.CFrame = targetBlock.CFrame
-			local targetRootPart = targetCharacter.HumanoidRootPart
-			bodyVelocity.Velocity = Vector3.zero
-
-            
-
-		else
-
-			if bodyVelocity then
+				if bodyVelocity then
 				bodyVelocity.Velocity = curvedDirection * customSpeed
-			end
+				end
 
 			-- Make assignableTargetBlock face the direction it's moving
-			if bodyVelocity.Velocity.Magnitude > 0 then
+				if bodyVelocity.Velocity.Magnitude > 0 then
 				assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
-			end
-		end
+				end
 
 			end
 		end)
