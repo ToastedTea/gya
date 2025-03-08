@@ -1,4 +1,5 @@
 local function GOON()
+	if _G.ENABLE == false then return end
 
 	local CONNECTIONS = {}
 	
