@@ -177,7 +177,7 @@ local function GOON()
 				bouttabus = distanceToTarget
 				local targetCharacterSpeed = targetCharacter.HumanoidRootPart.Velocity.Magnitude
 				local minSpeed = baseMinSpeed + (targetCharacterSpeed * velocityFactor)
-				local customSpeed = maxSpeed
+				local customSpeed = math.clamp(minSpeed + (distanceToTarget * distanceFactor), minSpeed, maxSpeed)
 
 				SPPPPP = customSpeed
 
