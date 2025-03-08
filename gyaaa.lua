@@ -116,9 +116,11 @@ local function GOON()
 		if not highlight then
 			highlight = Instance.new("Highlight")
 			highlight.Adornee = target
-			highlight.FillColor = color
-			highlight.OutlineTransparency = 1
-			highlight.FillTransparency = 1
+			highlight.FillColor = _G.ESPCOLOR
+			highlight.OutlineColor = _G.ESPOUTLINECOLOR
+			
+			highlight.OutlineTransparency = _G.ESPOUTLINETRANS
+			highlight.FillTransparency = _G.ESPTRANS
 			highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 			highlight.Name = name1.. "_Highlight"
 			highlight.Parent = highlightFolder
