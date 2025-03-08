@@ -254,10 +254,10 @@ local function GOON()
 
 				local AHGAHAHAH = game:GetService("Workspace"):FindFirstChild(otherPlayer.Name .. " Aircraft")
 				if AHGAHAHAH ~= nil then
-					if not highlightFolder:FindFirstChild(otherPlayer.Name.."_Highlight") then 
-						createHighlight(AHGAHAHAH, Color3.fromRGB(255, 0, 0),otherPlayer.Name) -- Default red
+					if highlightFolder:FindFirstChild(otherPlayer.Name.."_Highlight") then
+						highlightFolder:FindFirstChild(otherPlayer.Name.."_Highlight"):Destroy()
 					end
-
+					createHighlight(AHGAHAHAH, Color3.fromRGB(255, 0, 0),otherPlayer.Name) -- Default red
 				end
 
 			end
