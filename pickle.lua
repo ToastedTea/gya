@@ -1,5 +1,5 @@
-local c1 = nil
-c1 = workspace.ChildAdded:Connect(function(chil)
+
+workspace.ChildAdded:Connect(function(chil)
 	task.spawn(function()
 		local air = game:GetService("Workspace"):WaitForChild(game.Players.LocalPlayer.Name .. " Aircraft",2)
 
@@ -16,7 +16,7 @@ c1 = workspace.ChildAdded:Connect(function(chil)
 				if v:IsA("BasePart") and v.Color == Color3.fromRGB(0,255,0) then
 					ticklepickle = false
 					loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))()
-					c1:Disconnect()
+					thingy:Disconnect()
 
 				end
 
