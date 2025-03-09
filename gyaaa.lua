@@ -447,17 +447,16 @@ local function GOON()
 	textLabel.TextScaled = true
 
 	task.spawn(function()
-
-		while true do
-		if targetgobye == false then
+		c9 = game:GetService("RunService").Heartbeat:Connect(function()
+			if targetgobye == false then
 				local pingRf = game:GetService("ReplicatedStorage").NexusAdmin_GetPersistentBanList
 			local start = time()
 			pingRf:InvokeServer()
 			local yooo = (time() - start)
 
-			PingMS = game.Players.LocalPlayer:GetNetworkPing() * 2000
-			--PingMS = (yooo * 1000)
-			--PingMS *= 1.5
+			--PingMS = game.Players.LocalPlayer:GetNetworkPing() * 2000
+			PingMS = (yooo * 1000)
+			PingMS *= 1.5
 
 			if PingMS <= 5 then
 				PingMS = 70
@@ -468,12 +467,6 @@ local function GOON()
 
 
 			end
-
-			task.wait(3)
-
-		end
-		c9 = game:GetService("RunService").Heartbeat:Connect(function()
-			
 
 		end)
 	end)
