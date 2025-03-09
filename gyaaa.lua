@@ -465,9 +465,11 @@ local function GOON()
 
 
 			textLabel.Text = "Ping: ".. PingMS
-			task.wait(3)
+			
 
 			end
+
+			task.wait(1)
 		end
 		c9 = game:GetService("RunService").Heartbeat:Connect(function()
 			
