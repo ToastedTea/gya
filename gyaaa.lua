@@ -464,8 +464,6 @@ local function GOON()
 			textLabel.Text = "Ping: ".. PingMS
 
 
-			task.wait(2)
-			textLabel.Text = "UPDATING"
 			end
 
 		end)
