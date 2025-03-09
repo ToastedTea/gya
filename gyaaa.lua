@@ -1,3 +1,5 @@
+
+
 local function GOON()
 	if _G.ENABLE == false then return end
 
@@ -244,7 +246,7 @@ local function GOON()
 			end
 
 			targetCharacter = newTarget
-			updateHighlights()
+			--updateHighlights()
 		end
 
 	end
@@ -259,7 +261,7 @@ local function GOON()
 					if highlightFolder:FindFirstChild(otherPlayer.Name.."_Highlight") then
 						highlightFolder:FindFirstChild(otherPlayer.Name.."_Highlight"):Destroy()
 					end
-					createHighlight(AHGAHAHAH, Color3.fromRGB(255, 0, 0),otherPlayer.Name) -- Default red
+					--createHighlight(AHGAHAHAH, Color3.fromRGB(255, 0, 0),otherPlayer.Name) -- Default red
 				end
 
 			end
@@ -374,18 +376,6 @@ local function GOON()
 					end
 				end
 			end
-			for _, npc in npcFolder:GetChildren() do
-				if npc:FindFirstChild("HumanoidRootPart") then
-					local screenPoint, onScreen = camera:WorldToScreenPoint(npc.HumanoidRootPart.Position)
-					if onScreen then
-						local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - Vector2.new(mousePosition.X, mousePosition.Y)).Magnitude
-						if distance <= closestDistance then
-							closestTarget = npc
-							closestDistance = distance
-						end
-					end
-				end
-			end
 
 			if closestTarget then
 				setTarget(closestTarget)
@@ -471,10 +461,6 @@ local function GOON()
 
 			task.wait(1)
 		end
-		c9 = game:GetService("RunService").Heartbeat:Connect(function()
-			
-
-		end)
 	end)
 
 	local function onTargetBlockDestroyed()
@@ -509,10 +495,11 @@ local function GOON()
 	c6 = game:GetService("RunService").Heartbeat:Connect(checkProximity)
 	-- Initial setup of highlights and main loop
 
-	c7 = workspace.ChildAdded:Connect(function(ch)
+	--[[c7 = workspace.ChildAdded:Connect(function(ch)
 		setupHighlights()
 	end)
-	setupHighlights()
+	--]]
+	--setupHighlights()
 	c8 = game:GetService("RunService").RenderStepped:Connect(updateTargetBlock)
 	
 	
@@ -524,7 +511,6 @@ local function GOON()
 	table.insert(CONNECTIONS,c6)
 	table.insert(CONNECTIONS,c7)
 	table.insert(CONNECTIONS,c8)
-	table.insert(CONNECTIONS,c9)
 	
 	
 	
