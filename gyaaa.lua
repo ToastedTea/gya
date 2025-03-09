@@ -454,8 +454,9 @@ local function GOON()
 			pingRf:InvokeServer()
 			local yooo = (time() - start)
 
-			PingMS = (yooo * 1000)
-			PingMS *= 1.5
+			PingMS = game.Players.LocalPlayer:GetNetworkPing() * 2000
+			--PingMS = (yooo * 1000)
+			--PingMS *= 1.5
 
 			if PingMS <= 5 then
 				PingMS = 70
