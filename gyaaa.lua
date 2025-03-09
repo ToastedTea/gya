@@ -57,7 +57,7 @@ local function GOON()
 
 	for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 
-		if v:IsA("BasePart") and v.Color == Color3.fromRGB(0,255,0) then
+		if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
 			assignableTargetBlock = v
 
 		end
