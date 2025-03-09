@@ -455,6 +455,7 @@ local function GOON()
 			local yooo = (time() - start)
 
 			PingMS = (yooo * 1000)
+			PingMS *= 1.5
 
 			if PingMS <= 5 then
 				PingMS = 70
