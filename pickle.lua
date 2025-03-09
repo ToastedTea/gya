@@ -13,7 +13,7 @@ workspace.ChildAdded:Connect(function(chil)
 			if ticklepickle == false then return end
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 
-				if v:IsA("BasePart") and v.Color == Color3.fromRGB(0,255,0) then
+				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
 					ticklepickle = false
 					loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))()
 					thingy:Disconnect()
