@@ -172,7 +172,7 @@ local function GOON()
 		local error1 = pcall(function()
 			if assignableTargetBlock and targetCharacter and ended == false and targetCharacter:FindFirstChild("HumanoidRootPart") ~= nil then
 				-- Ensure assignableTargetBlock has a BodyVelocity for movement
-				if not assignableTargetBlock:FindFirstChildOfClass("BodyVelocity") then
+				if not assignableTargetBlock:FindFirstChildOfClass("BodyVelocity") and _G.Teleport == false then
 					local bodyVelocity = Instance.new("BodyVelocity")
 					bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 					bodyVelocity.Velocity = Vector3.zero
@@ -203,12 +203,15 @@ local function GOON()
 				-- Check if `assignableTargetBlock` has intercepted `targetBlock`
 				if bodyVelocity then
 					bodyVelocity.Velocity = curvedDirection * customSpeed
+					if bodyVelocity.Velocity.Magnitude > 0 then
+					assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
+					end
+				else
+				    assignableTargetBlock.Position = targetPosition
 				end
 
 				-- Make assignableTargetBlock face the direction it's moving
-				if bodyVelocity.Velocity.Magnitude > 0 then
-					assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
-				end
+				
 
 			end
 		end)
