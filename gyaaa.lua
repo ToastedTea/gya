@@ -241,12 +241,14 @@ local function GOON()
 		if ended == false then
 
 
-			assignableTargetBlock.CFrame =
+			if _G.AIRSTRIKE then
+				assignableTargetBlock.CFrame =
     CFrame.new(
         assignableTargetBlock.CFrame.X,
         10000,
         assignableTargetBlock.CFrame.Z
     )
+			end
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 				if v:IsA("BasePart") and v ~= assignableTargetBlock then
 					v.CanCollide = false
