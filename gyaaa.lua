@@ -241,7 +241,12 @@ local function GOON()
 		if ended == false then
 
 
-
+			assignableTargetBlock.CFrame =
+    CFrame.new(
+        assignableTargetBlock.CFrame.X,
+        10000,
+        assignableTargetBlock.CFrame.Z
+    )
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 				if v:IsA("BasePart") and v ~= assignableTargetBlock then
 					v.CanCollide = false
@@ -518,7 +523,9 @@ local function GOON()
 	
 	
 	
-	--local ee,label31 = createBillboardGui(targetBlock,Color3.fromRGB(0, 0, 255))
+	if _G.SHOWPOSBLOCK then
+		local ee,label31 = createBillboardGui(targetBlock,Color3.fromRGB(0, 0, 255))
+	end
 	local ee1,label32 = createBillboardGui(targetBlock2,Color3.fromRGB(255, 255, 0))
 	--local ee2,label3 = createBillboardGui(targetBlock21,Color3.fromRGB(255, 0, 0))
 
