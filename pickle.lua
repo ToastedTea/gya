@@ -16,15 +16,13 @@ workspace.ChildAdded:Connect(function(chil)
 			if ticklepickle == false then return end
 			if not game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name.. " Aircraft") then return end
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
-				if v:IsA("BasePart") and v.Color == _G.SECONDARYCOLOR then secondary = v print("found secnd") end
+				if v:IsA("BasePart") and v.Color == _G.SECONDARYCOLOR then secondary = v end
 			end
 
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 
-				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR and primary == nil then
+				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
 					primary = v
-					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
-					fa(v)
 				end
 
 			end
@@ -45,6 +43,8 @@ workspace.ChildAdded:Connect(function(chil)
 		end)
 		task.spawn(function()
 			repeat task.wait() until done == true and primary ~= nil
+			local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
+			fa(primary)
 			if _G.EXPECTSECOND then 
 				repeat task.wait() until secondary ~= nil 
 				if primary ~= nil and secondary ~= nil then
