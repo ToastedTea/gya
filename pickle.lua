@@ -15,11 +15,10 @@ workspace.ChildAdded:Connect(function(chil)
 		local done = false
 		thingy = game:GetService("RunService").RenderStepped:Connect(function()
 			if ticklepickle == false then return end
-				for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
-					if v:IsA("BasePart") and v.Color == _G.SECONDARYCOLOR then secondary = v end
-				end
-
+			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
+				if v:IsA("BasePart") and v.Color == _G.SECONDARYCOLOR then secondary = v end
 			end
+			
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 
 				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
@@ -33,14 +32,15 @@ workspace.ChildAdded:Connect(function(chil)
 			end
 			done = true
 		end)
+		
+		
 		repeat task.wait() until done == true
-			
+
 		if primary ~= nil and secondary ~= nil then
 			repeat task.wait() until primary.Parent == nil
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))()(secondary)
 		end
-			
 	end)
-
+	
 
 end)
