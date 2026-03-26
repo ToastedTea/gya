@@ -42,7 +42,6 @@ workspace.ChildAdded:Connect(function(chil)
 				end
 			end
 		end)
-
 		repeat task.wait() until done == true and primary ~= nil
 		if _G.EXPECTSECOND then repeat task.wait() until secondary ~= nil end
 		print(primary.Name)
@@ -55,6 +54,4 @@ workspace.ChildAdded:Connect(function(chil)
 			fa(secondary)
 		end
 	end)
-
-
 end)
