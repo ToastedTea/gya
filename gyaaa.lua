@@ -1,4 +1,6 @@
-return function(assignableTargetBlock)
+local argssss = {...}
+local assignableTargetBlock = argssss[1]
+
 	if _G.ENABLE == false then return end
 	print("OK")
 
@@ -542,4 +544,4 @@ targetBlockHighlight.OutlineTransparency = 1
 	targetBlockHighlight1.FillColor = Color3.fromRGB(100, 0, 255) -- gren
 	targetBlockHighlight1.Parent = assignableTargetBlock
 	targetBlockHighlight1.OutlineTransparency = 1
-end
+
