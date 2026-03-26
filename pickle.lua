@@ -21,7 +21,7 @@ workspace.ChildAdded:Connect(function(chil)
 
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 
-				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
+				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR and primary == nil then
 					primary = v
 					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
 					fa(v)
@@ -55,7 +55,7 @@ workspace.ChildAdded:Connect(function(chil)
 					fa(secondary)
 				end
 			end
-			
+
 		end)
 	end)
 end)
