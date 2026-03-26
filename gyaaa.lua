@@ -1,10 +1,8 @@
-
-
-return function GOON(assignableTargetBlock)
+return function(assignableTargetBlock)
 	if _G.ENABLE == false then return end
 
 	local CONNECTIONS = {}
-	
+
 	local c1 = nil
 	local c2 = nil
 	local c3 = nil
@@ -193,14 +191,14 @@ return function GOON(assignableTargetBlock)
 				if bodyVelocity then
 					bodyVelocity.Velocity = curvedDirection * customSpeed
 					if bodyVelocity.Velocity.Magnitude > 0 then
-					assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
+						assignableTargetBlock.CFrame = CFrame.lookAt(assignableTargetBlock.Position, assignableTargetBlock.Position + bodyVelocity.Velocity.unit)
 					end
 				else
-				    assignableTargetBlock.Position = targetPosition
+					assignableTargetBlock.Position = targetPosition
 				end
 
 				-- Make assignableTargetBlock face the direction it's moving
-				
+
 
 			end
 		end)
@@ -232,11 +230,11 @@ return function GOON(assignableTargetBlock)
 
 			if _G.AIRSTRIKE then
 				assignableTargetBlock.CFrame =
-    CFrame.new(
-        assignableTargetBlock.CFrame.X,
-        10000,
-        assignableTargetBlock.CFrame.Z
-    )
+					CFrame.new(
+						assignableTargetBlock.CFrame.X,
+						10000,
+						assignableTargetBlock.CFrame.Z
+					)
 			end
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 				if v:IsA("BasePart") then
@@ -419,29 +417,48 @@ return function GOON(assignableTargetBlock)
 		while true do 
 			if targetgobye == false then
 				local pingRf = game:GetService("ReplicatedStorage").NexusAdmin_GetPersistentBanList
-			local start = time()
-			pingRf:InvokeServer()
-			local yooo = (time() - start)
+				local start = time()
+				pingRf:InvokeServer()
+				local yooo = (time() - start)
 
-			--PingMS = game.Players.LocalPlayer:GetNetworkPing() * 2000
-			PingMS = (yooo * 1000)
-			PingMS *= _G.PingMult
+				--PingMS = game.Players.LocalPlayer:GetNetworkPing() * 2000
+				PingMS = (yooo * 1000)
+				PingMS *= _G.PingMult
 
-			if PingMS <= 5 then
-				PingMS = 70
-			end
+				if PingMS <= 5 then
+					PingMS = 70
+				end
 
 
-			textLabel.Text = "Ping: ".. PingMS
-			
+				textLabel.Text = "Ping: ".. PingMS
+
 
 			end
 
 			task.wait(1)
 		end
 	end)
-	
 
+	local function onTargetBlockDestroyed()
+		targetgobye = true
+		ended = true
+		textLabel.Text = "NOIOOOOOO"
+
+		task.spawn(function()
+			for i,v in CONNECTIONS do
+				v:Disconnect()
+			end
+		end)
+		assignableTargetBlock:Destroy()
+		targetBlock:Destroy()
+		targetBlock21:Destroy()
+		targetBlock2:Destroy()
+		highlightFolder:Destroy()
+		screenGui:Destroy()
+		--script:Destroy()
+
+	end
+	
 	local function checkProximity()
 		if assignableTargetBlock and targetBlock and ended == false then
 			local distance = (assignableTargetBlock.Position - targetBlock.Position).Magnitude
@@ -463,27 +480,9 @@ return function GOON(assignableTargetBlock)
 		end
 	end
 
+
+
 	
-
-	local function onTargetBlockDestroyed()
-		targetgobye = true
-		ended = true
-		textLabel.Text = "NOIOOOOOO"
-		
-		task.spawn(function()
-			for i,v in CONNECTIONS do
-				v:Disconnect()
-			end
-		end)
-		assignableTargetBlock:Destroy()
-		targetBlock:Destroy()
-		targetBlock21:Destroy()
-		targetBlock2:Destroy()
-		highlightFolder:Destroy()
-		screenGui:Destroy()
-		--script:Destroy()
-
-	end
 
 	-- Connect the event to detect if targetBlock gets destroyed
 
@@ -503,8 +502,8 @@ return function GOON(assignableTargetBlock)
 	--]]
 	--setupHighlights()
 	c8 = game:GetService("RunService").RenderStepped:Connect(updateTargetBlock)
-	
-	
+
+
 	table.insert(CONNECTIONS,c1)
 	table.insert(CONNECTIONS,c2)
 	table.insert(CONNECTIONS,c3)
@@ -513,10 +512,10 @@ return function GOON(assignableTargetBlock)
 	table.insert(CONNECTIONS,c6)
 	table.insert(CONNECTIONS,c7)
 	table.insert(CONNECTIONS,c8)
-	
-	
-	
-	
+
+
+
+
 	if _G.SHOWPOSBLOCK then
 		local ee2,label3 = createBillboardGui(assignableTargetBlock,Color3.fromRGB(255, 0, 0))
 		--local ee,label31 = createBillboardGui(targetBlock,Color3.fromRGB(0, 0, 255))
@@ -537,4 +536,3 @@ targetBlockHighlight.OutlineTransparency = 1
 	targetBlockHighlight1.Parent = assignableTargetBlock
 	targetBlockHighlight1.OutlineTransparency = 1
 end
-
