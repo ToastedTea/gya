@@ -452,7 +452,8 @@ local assignableTargetBlock = argssss[1]
 				v:Disconnect()
 			end
 		end)
-		assignableTargetBlock:Destroy()
+		assignableTargetBlock:AddTag("byebye")
+		game.Debris:AddItem(assignableTargetBlock)
 		targetBlock:Destroy()
 		targetBlock21:Destroy()
 		targetBlock2:Destroy()
