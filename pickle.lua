@@ -22,7 +22,6 @@ workspace.ChildAdded:Connect(function(chil)
 			for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
 
 				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
-					ticklepickle = false
 					primary = v
 					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
 					fa(v)
@@ -32,11 +31,13 @@ workspace.ChildAdded:Connect(function(chil)
 
 			if _G.EXPECTSECOND then
 				if primary ~= nil and secondary ~= nil then
+					ticklepickle = false
 					done = true
 					thingy:Disconnect()
 				end
 			else
 				if primary ~= nil then
+					ticklepickle = false
 					done = true
 					thingy:Disconnect()
 				end
@@ -44,16 +45,17 @@ workspace.ChildAdded:Connect(function(chil)
 		end)
 		task.spawn(function()
 			repeat task.wait() until done == true and primary ~= nil
-			if _G.EXPECTSECOND then repeat task.wait() until secondary ~= nil end
-			print(primary.Name)
-			print(secondary.Name)
-			if primary ~= nil and secondary ~= nil then
-				repeat task.wait() until primary.Parent == nil or primary == nil or primary:HasTag("byebye")
-				local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
+			if _G.EXPECTSECOND then 
+				repeat task.wait() until secondary ~= nil 
+				if primary ~= nil and secondary ~= nil then
+					repeat task.wait() until primary.Parent == nil or primary == nil or primary:HasTag("byebye")
+					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
 
-				print("Ya")
-				fa(secondary)
+					print("Ya")
+					fa(secondary)
+				end
 			end
+			
 		end)
 	end)
 end)
