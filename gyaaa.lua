@@ -1,6 +1,6 @@
 
 
-local function GOON()
+return function GOON(assignableTargetBlock)
 	if _G.ENABLE == false then return end
 
 	local CONNECTIONS = {}
@@ -40,7 +40,6 @@ local function GOON()
 		end
 	end
 
-	local assignableTargetBlock = nil  -- Can be set later to a valid target block
 
 	local aircraft = game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]
 
@@ -56,16 +55,6 @@ local function GOON()
 		end
 		return gyat
 	end
-
-	for i,v in game:GetService("Workspace")[game.Players.LocalPlayer.Name .. " Aircraft"]:GetDescendants() do
-
-		if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
-			assignableTargetBlock = v
-
-		end
-
-	end
-
 
 
 	if assignableTargetBlock == nil then print("boowomp") return end
@@ -405,27 +394,6 @@ local function GOON()
 			onPlayerClicked(mousePosition)
 		end
 	end)
-
-	local function checkProximity()
-		if assignableTargetBlock and targetBlock and ended == false then
-			local distance = (assignableTargetBlock.Position - targetBlock.Position).Magnitude
-			if distance <= _G.Kablooey then  -- You can adjust this threshold as needed
-
-				for i, v in aircraft:GetDescendants() do
-					if v.Name == "ExplosiveBlock" then
-						local args = {
-							[1] = 1741392252.9400637;
-							[2] = "F";
-						}
-
-
-						v:WaitForChild("Events", true):WaitForChild("Explode", true):Fire(unpack(args)) -- Event
-					end
-				end
-			end
-		end
-	end
-
 	local targetgobye = false
 
 
@@ -472,6 +440,30 @@ local function GOON()
 			task.wait(1)
 		end
 	end)
+	
+
+	local function checkProximity()
+		if assignableTargetBlock and targetBlock and ended == false then
+			local distance = (assignableTargetBlock.Position - targetBlock.Position).Magnitude
+			if distance <= _G.Kablooey then  -- You can adjust this threshold as needed
+
+				for i, v in aircraft:GetDescendants() do
+					if v.Name == "ExplosiveBlock" then
+						local args = {
+							[1] = 1741392252.9400637;
+							[2] = "F";
+						}
+
+
+						v:WaitForChild("Events", true):WaitForChild("Explode", true):Fire(unpack(args)) -- Event
+						onTargetBlockDestroyed()
+					end
+				end
+			end
+		end
+	end
+
+	
 
 	local function onTargetBlockDestroyed()
 		targetgobye = true
@@ -546,4 +538,3 @@ targetBlockHighlight.OutlineTransparency = 1
 	targetBlockHighlight1.OutlineTransparency = 1
 end
 
-GOON()
