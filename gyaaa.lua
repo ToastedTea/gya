@@ -457,7 +457,7 @@ local function GOON()
 
 			--PingMS = game.Players.LocalPlayer:GetNetworkPing() * 2000
 			PingMS = (yooo * 1000)
-			PingMS *= 1.5
+			PingMS *= _G.PingMult
 
 			if PingMS <= 5 then
 				PingMS = 70
