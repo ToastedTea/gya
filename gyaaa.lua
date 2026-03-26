@@ -1,5 +1,6 @@
 return function(assignableTargetBlock)
 	if _G.ENABLE == false then return end
+	print("OK")
 
 	local CONNECTIONS = {}
 
