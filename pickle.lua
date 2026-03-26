@@ -24,7 +24,7 @@ workspace.ChildAdded:Connect(function(chil)
 				if v:IsA("BasePart") and v.Color == _G.TARGETCOLOR then
 					ticklepickle = false
 					primary = v
-					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
+					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))()
 					fa(v)
 					done = true
 					thingy:Disconnect()
@@ -40,7 +40,7 @@ workspace.ChildAdded:Connect(function(chil)
 		print(secondary.Name)
 		if primary ~= nil and secondary ~= nil then
 			repeat task.wait() until primary.Parent == nil or primary == nil or primary:HasTag("byebye")
-			local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
+			local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))()
 	
 			print("Ya")
 			fa(secondary)
