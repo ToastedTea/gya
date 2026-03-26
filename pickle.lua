@@ -26,10 +26,21 @@ workspace.ChildAdded:Connect(function(chil)
 					primary = v
 					local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
 					fa(v)
+				end
+
+			end
+
+			if _G.EXPECTSECOND then
+				if primary ~= nil and secondary ~= nil then
 					done = true
 					thingy:Disconnect()
 				end
-
+			else
+					if primary ~= nil then
+					done = true
+					thingy:Disconnect()
+				end
+					end
 			end
 		end)
 
