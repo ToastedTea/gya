@@ -458,7 +458,7 @@ return function(assignableTargetBlock)
 		--script:Destroy()
 
 	end
-	
+
 	local function checkProximity()
 		if assignableTargetBlock and targetBlock and ended == false then
 			local distance = (assignableTargetBlock.Position - targetBlock.Position).Magnitude
@@ -466,14 +466,20 @@ return function(assignableTargetBlock)
 
 				for i, v in aircraft:GetDescendants() do
 					if v.Name == "ExplosiveBlock" then
-						local args = {
-							[1] = 1741392252.9400637;
-							[2] = "F";
-						}
+						local ya = v:FindFirstChild("Decorate")
+						if ya and ya.Color == assignableTargetBlock.Color then
+							print(ya.Color)
+							print("BROOOo")
+							local args = {
+								[1] = 1741392252.9400637;
+								[2] = "F";
+							}
 
+							assignableTargetBlock:AddTag("byebye")
+							v:WaitForChild("Events",true):WaitForChild("Explode",true):Fire(unpack(args)) -- Event
+							onTargetBlockDestroyed()
+						end
 
-						v:WaitForChild("Events", true):WaitForChild("Explode", true):Fire(unpack(args)) -- Event
-						onTargetBlockDestroyed()
 					end
 				end
 			end
@@ -482,7 +488,7 @@ return function(assignableTargetBlock)
 
 
 
-	
+
 
 	-- Connect the event to detect if targetBlock gets destroyed
 
