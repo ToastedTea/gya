@@ -42,18 +42,18 @@ workspace.ChildAdded:Connect(function(chil)
 				end
 			end
 		end)
-		
-		repeat task.wait() until done == true and primary ~= nil
-		if _G.EXPECTSECOND then repeat task.wait() until secondary ~= nil end
-		print(primary.Name)
-		print(secondary.Name)
-		if primary ~= nil and secondary ~= nil then
-			repeat task.wait() until primary.Parent == nil or primary == nil or primary:HasTag("byebye")
-			local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
+		task.spawn(function()
+			repeat task.wait() until done == true and primary ~= nil
+			if _G.EXPECTSECOND then repeat task.wait() until secondary ~= nil end
+			print(primary.Name)
+			print(secondary.Name)
+			if primary ~= nil and secondary ~= nil then
+				repeat task.wait() until primary.Parent == nil or primary == nil or primary:HasTag("byebye")
+				local fa = loadstring(game:HttpGet("https://raw.githubusercontent.com/ToastedTea/gya/refs/heads/main/gyaaa.lua"))
 
-			print("Ya")
-			fa(secondary)
-		end
-		
+				print("Ya")
+				fa(secondary)
+			end
+		end)
 	end)
 end)
