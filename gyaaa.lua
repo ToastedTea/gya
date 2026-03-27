@@ -152,7 +152,7 @@ local assignableTargetBlock = argssss[1]
 		local interceptTime = relativePosition.Magnitude / (assignableSpeed + targetSpeed)
 
 		-- Predict future position of `targetBlock` based on its velocity and calculated intercept time
-		return targetPos + targetVelocity * interceptTime
+		return targetPos + (targetVelocity * interceptTime) * _G.Prediction
 	end
 	local hasIntercept = false
 
